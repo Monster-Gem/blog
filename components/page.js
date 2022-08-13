@@ -3,13 +3,15 @@ import Head from "next/head";
 
 export default function Page({ tabName, children }) {
   return (
-    <div className="container">
+    <div className="wrapper">
       <Head>
         <title>{tabName}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Container maxWidth="sm">{children}</Container>
+      <Container maxWidth="sm" className="container">
+        {children}
+      </Container>
     </div>
   );
 }
