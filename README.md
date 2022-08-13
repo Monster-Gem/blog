@@ -1,4 +1,4 @@
-### Installation options
+### How to contribute
 
 1. Clone this repo: `https://github.com/Monster-Gem/blog.git`
 2. Navigate to the directory and run `yarn install`
