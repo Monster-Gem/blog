@@ -7,14 +7,15 @@ import {
   Typography,
   CardContent,
 } from "@mui/material";
+import { usePosts } from "hooks/use-posts";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 export default function IndexPage() {
   const router = useRouter();
-  const posts = [
-    { id: 1, title: "A new hope", author: "George Lucas" },
-    { id: 2, title: "The empire strikes back", author: "George Lucas" },
-  ];
+
+  const { getPosts, posts, isLoading } = usePosts();
+  useEffect(getPosts, []);
 
   return (
     <Page tabName="Read posts">
@@ -22,24 +23,30 @@ export default function IndexPage() {
         Recent posts
       </Typography>
       <Box mx={4} my={2}>
-        <Grid container spacing={2}>
-          {posts.map(({ author, id, title }) => (
-            <Grid key={id} item xs={12}>
-              <Card elevation={2}>
-                <CardActionArea onClick={() => router.push(`/post/${id}`)}>
-                  <CardContent>
-                    <Typography variant="h6" gutterBottom>
-                      {title}
-                    </Typography>
-                    <Typography variant="caption" color="text.secondary">
-                      {author}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
+        {isLoading ? (
+          <Typography variant="h5" align="center">
+            Loading...
+          </Typography>
+        ) : (
+          <Grid container spacing={2}>
+            {posts.map(({ name, id, title }) => (
+              <Grid key={id} item xs={12}>
+                <Card elevation={2}>
+                  <CardActionArea onClick={() => router.push(`/post/${id}`)}>
+                    <CardContent>
+                      <Typography variant="h6" gutterBottom>
+                        {title}
+                      </Typography>
+                      <Typography variant="caption" color="text.secondary">
+                        {name}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        )}
       </Box>
     </Page>
   );
