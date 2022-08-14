@@ -29,10 +29,12 @@ export default function IndexPage() {
           </Typography>
         ) : (
           <Grid container spacing={2}>
-            {posts.map(({ name, id, title }) => (
-              <Grid key={id} item xs={12}>
+            {posts.map(({ name, post_id, title }) => (
+              <Grid key={post_id} item xs={12}>
                 <Card elevation={2}>
-                  <CardActionArea onClick={() => router.push(`/post/${id}`)}>
+                  <CardActionArea
+                    onClick={() => router.push(`/post/${post_id}`)}
+                  >
                     <CardContent>
                       <Typography variant="h6" gutterBottom>
                         {title}
