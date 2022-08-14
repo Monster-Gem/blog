@@ -2,18 +2,19 @@ import { useState } from "react";
 
 export function usePosts() {
   const [posts, setPosts] = useState([]);
+  const [post, setPost] = useState([]);
   const [isLoadingPosts, setLoadingPosts] = useState(false);
   const [isLoadingCreate, setLoadingCreate] = useState(false);
 
   const baseApiUrl =
     "https://itfpz6mc7f.execute-api.us-east-1.amazonaws.com/default";
 
-  function getPosts() {
+  function getPosts(id) {
     setLoadingPosts(true);
-    fetch(`${baseApiUrl}/getPost/`)
+    fetch(`${baseApiUrl}/getPost/${id ?? ""}`)
       .then((res) => res.json())
       .then((posts) => {
-        setPosts(posts);
+        id ? setPost(posts[0]) : setPosts(posts);
         setLoadingPosts(false);
       });
   }
@@ -28,8 +29,7 @@ export function usePosts() {
       },
     })
       .then((res) => res.json())
-      .then((post) => {
-        console.log(post);
+      .then(() => {
         setLoadingCreate(false);
       });
   }
@@ -37,6 +37,7 @@ export function usePosts() {
   return {
     isLoading: isLoadingPosts || isLoadingCreate,
     posts,
+    post,
     getPosts,
     createPost,
   };
