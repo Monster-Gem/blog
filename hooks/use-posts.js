@@ -1,4 +1,4 @@
-import { useState, createContext } from "react";
+import { useState } from "react";
 
 export function usePosts() {
   const [posts, setPosts] = useState([]);
@@ -18,7 +18,3 @@ export function usePosts() {
 
   return { isLoading: isLoadingPosts, posts, getPosts };
 }
-
-export const PostsContext = createContext([]);
-
-export const LoadingContext = createContext(false);

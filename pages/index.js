@@ -7,17 +7,14 @@ import {
   Typography,
   CardContent,
 } from "@mui/material";
-import { PostsContext, LoadingContext, usePosts } from "hooks/use-posts";
+import { usePosts } from "hooks/use-posts";
 import { useRouter } from "next/router";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 
 export default function IndexPage() {
   const router = useRouter();
 
-  const posts = useContext(PostsContext);
-  const isLoading = useContext(LoadingContext);
-
-  const { getPosts } = usePosts();
+  const { getPosts, posts, isLoading } = usePosts();
   useEffect(getPosts, []);
 
   return (
