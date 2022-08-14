@@ -21,3 +21,9 @@ body {
 .wrapper {
   padding: 40px 16px;
 }
+
+.bottom-navigation {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+}
