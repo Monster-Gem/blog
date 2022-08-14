@@ -1,23 +1,53 @@
 import Page from "@components/page";
-import { Box, Button, TextField, Typography } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Button,
+  Snackbar,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { usePosts } from "hooks/use-posts";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/router";
 
 export default function AuthorPage() {
   const { register, handleSubmit } = useForm();
   const { isLoading, createPost } = usePosts();
-  const router = useRouter();
+  const [feedbackMessage, setFeedbackMessage] = useState("");
+
+  function handleFeedbackClose() {
+    setFeedbackMessage("");
+  }
 
   function onSubmit(data) {
     createPost(
       data,
-      ({ post_id }) => post_id && router.push(`/post/${post_id}`)
+      () => setFeedbackMessage("success"),
+      () => setFeedbackMessage("error")
     );
   }
 
   return (
     <Page tabName="Create a new post">
+      <Snackbar
+        open={!!feedbackMessage}
+        autoHideDuration={3000}
+        onClose={handleFeedbackClose}
+      >
+        <Alert
+          onClose={handleFeedbackClose}
+          severity={feedbackMessage || "success"}
+          sx={{ width: "100%" }}
+        >
+          {
+            {
+              error: "An error have occured",
+              success: "Post submitted successfully!",
+            }[feedbackMessage]
+          }
+        </Alert>
+      </Snackbar>
       <Typography variant="h4" align="center">
         Welcome to the writer's portal
       </Typography>

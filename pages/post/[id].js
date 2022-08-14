@@ -1,14 +1,12 @@
 import Page from "@components/page";
 import { useRouter } from "next/router";
-import { usePosts } from "hooks/use-posts";
 import { useEffect } from "react";
 import { Typography, Box } from "@mui/material";
 
-export default function PostPage() {
+export default function PostPage({ getPosts, post, isLoading }) {
   const router = useRouter();
   const { id } = router.query;
 
-  const { getPosts, post, isLoading } = usePosts();
   useEffect(() => {
     getPosts(id);
   }, [id]);
