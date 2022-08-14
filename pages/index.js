@@ -29,7 +29,7 @@ export default function IndexPage() {
           </Typography>
         ) : (
           <Grid container spacing={2}>
-            {posts.map(({ name, post_id, title }) => (
+            {Object.values(posts).map(({ name, post_id, title }) => (
               <Grid key={post_id} item xs={12}>
                 <Card elevation={2}>
                   <CardActionArea

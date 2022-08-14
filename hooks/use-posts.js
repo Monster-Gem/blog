@@ -14,12 +14,22 @@ export function usePosts() {
     fetch(`${baseApiUrl}/getPost/${id ?? ""}`)
       .then((res) => res.json())
       .then((posts) => {
-        id ? setPost(posts[0]) : setPosts(posts);
+        id
+          ? setPost(posts[0])
+          : setPosts(
+              posts.reduce(
+                (previousValue, currentValue) => ({
+                  ...previousValue,
+                  [currentValue.post_id]: currentValue,
+                }),
+                {}
+              )
+            );
         setLoadingPosts(false);
       });
   }
 
-  function createPost(data) {
+  function createPost(data, onSuccess) {
     setLoadingCreate(true);
     fetch(`${baseApiUrl}/postPost`, {
       method: "POST",
@@ -29,7 +39,8 @@ export function usePosts() {
       },
     })
       .then((res) => res.json())
-      .then(() => {
+      .then((data) => {
+        onSuccess(data);
         setLoadingCreate(false);
       });
   }

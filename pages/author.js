@@ -2,10 +2,19 @@ import Page from "@components/page";
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { usePosts } from "hooks/use-posts";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
 
 export default function AuthorPage() {
   const { register, handleSubmit } = useForm();
   const { isLoading, createPost } = usePosts();
+  const router = useRouter();
+
+  function onSubmit(data) {
+    createPost(
+      data,
+      ({ post_id }) => post_id && router.push(`/post/${post_id}`)
+    );
+  }
 
   return (
     <Page tabName="Create a new post">
@@ -13,7 +22,7 @@ export default function AuthorPage() {
         Welcome to the writer's portal
       </Typography>
       <Box mx={4}>
-        <form onSubmit={handleSubmit(createPost)}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <TextField
             label="Authentication token"
             variant="standard"
