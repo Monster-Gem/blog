@@ -7,14 +7,12 @@ import {
   Typography,
   CardContent,
 } from "@mui/material";
-import { usePosts } from "hooks/use-posts";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
-export default function IndexPage() {
+export default function IndexPage({ getPosts, posts, isLoading }) {
   const router = useRouter();
 
-  const { getPosts, posts, isLoading } = usePosts();
   useEffect(getPosts, []);
 
   return (
@@ -29,24 +27,27 @@ export default function IndexPage() {
           </Typography>
         ) : (
           <Grid container spacing={2}>
-            {posts.map(({ name, post_id, title }) => (
-              <Grid key={post_id} item xs={12}>
-                <Card elevation={2}>
-                  <CardActionArea
-                    onClick={() => router.push(`/post/${post_id}`)}
-                  >
-                    <CardContent>
-                      <Typography variant="h6" gutterBottom>
-                        {title}
-                      </Typography>
-                      <Typography variant="caption" color="text.secondary">
-                        {name}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
-              </Grid>
-            ))}
+            {Object.values(posts).map(
+              ({ name, post_id, title }) =>
+                post_id && (
+                  <Grid key={post_id} item xs={12}>
+                    <Card elevation={2}>
+                      <CardActionArea
+                        onClick={() => router.push(`/post/${post_id}`)}
+                      >
+                        <CardContent>
+                          <Typography variant="h6" gutterBottom>
+                            {title}
+                          </Typography>
+                          <Typography variant="caption" color="text.secondary">
+                            {name}
+                          </Typography>
+                        </CardContent>
+                      </CardActionArea>
+                    </Card>
+                  </Grid>
+                )
+            )}
           </Grid>
         )}
       </Box>
