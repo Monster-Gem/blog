@@ -10,10 +10,10 @@ export function usePosts() {
   const baseApiUrl =
     "https://itfpz6mc7f.execute-api.us-east-1.amazonaws.com/default";
 
-  function addPostToCache(data) {
+  function addPostToCache({ value }) {
     setPosts((currentPosts) => ({
       ...currentPosts,
-      [data.post_id]: { ...currentPosts[data.post_id], ...data },
+      [value.post_id]: { ...currentPosts[value.post_id], ...value },
     }));
   }
 
