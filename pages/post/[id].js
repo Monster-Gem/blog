@@ -35,7 +35,9 @@ export default function PostPage({ getPosts, post, isLoading }) {
           </Box>
 
           <Box py={4}>
-            <Typography align="justify">{post.body}</Typography>
+            <Typography align="justify" whiteSpace="break-spaces">
+              {post.body}
+            </Typography>
           </Box>
         </Box>
       )}

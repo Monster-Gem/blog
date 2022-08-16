@@ -20,7 +20,7 @@ export default function IndexPage({ getPosts, posts, isLoading }) {
       <Typography variant="h4" align="center">
         Recent posts
       </Typography>
-      <Box mx={4} my={2}>
+      <Box mx={4} mt={2} mb={5}>
         {isLoading ? (
           <Typography variant="h5" align="center">
             Loading...
